@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import bsp_utils from 'bsp-utils';
-import vex from 'bower/vex/vex';
+import vex from 'vex';
 
 var bsp_modal = {
 
