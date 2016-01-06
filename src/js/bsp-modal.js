@@ -6,7 +6,8 @@ var bsp_modal = {
 
     defaults: {
         'id'    : 'modal',
-        'theme' : 'default'
+        'theme' : 'default',
+        'autoOpenHash' : 'slide-'
     },
 
     init: function($el, options) {
@@ -24,6 +25,20 @@ var bsp_modal = {
 
         self.$el.data('bsp-modal', self);
 
+        self._handleAutoOpenFromHash();
+
+    },
+
+    // this is fairly custom for base, but the idea is that if you have a special hash,
+    // we will go ahead and auto open the modal. The default use case for this will be
+    // to open the modal if there is a deep linkable slider in it and someone wants that
+    // this can be changed by passing in an option for whatever we want the auto open hash to be
+    _handleAutoOpenFromHash: function(){
+        var self = this;
+
+        if(window.location.hash.indexOf('#' + self.settings.autoOpenHash) > -1) {
+            self._openFromDOM();
+        }
     },
 
     // run through the body and grap and links to open THIS modal and hit the public API when clicked
@@ -31,25 +46,28 @@ var bsp_modal = {
         var self = this;
 
         $('[data-bsp-modal-open=' + self.settings.id + ']').on('click', function() {
-
-            self._openFromDOM();
+            // if we have a anchor link, let that through
+            if($(this).attr('href').indexOf('#') === 0) {
+                self._openFromDOM({
+                    'hash' : $(this).attr('href')
+                });
+            } else {
+                self._openFromDOM();
+            }
 
             return false;
-
         });
     },
 
-    // run through the body and grap and links to close THIS modal and hit the public API when clicked
+    // run through the body and grab any links to close THIS modal and hit the public API when clicked
     _handleCloseLinks: function() {
 
         var self = this;
 
         $('[data-bsp-modal-close=' + self.settings.id + ']').on('click', function() {
-
             self.close();
 
             return false;
-
         });
     },
 
@@ -76,6 +94,10 @@ var bsp_modal = {
         });
 
         self.vexInstance.on('vexClose', function(options) {
+            // when we close replace the state just in case we had a hash
+            if(window.location.hash !== '') {
+                history.replaceState('', document.title, window.location.pathname);
+            }
             self._trigger('bsp-modal:close', options);
         });
     },
@@ -113,8 +135,18 @@ var bsp_modal = {
     // private function to open modal from the DOM. Calls the vex open method, but also sets up
     // the centering and passes though the events. Lastly, upon close, it puts everything back the
     // way it founded, leaving the DOM intact
-    _openFromDOM: function() {
+    _openFromDOM: function(options) {
         var self = this;
+        // just in case no options are passed in
+        options = options || {};
+        // grab the modal data within that element
+        var $modalData = self.$el.find('.modal-data').contents();
+        // save it off, we're going to need to put it back
+        var $savedContents = $modalData.clone();
+
+        if(options.hash) {
+            window.location.hash = options.hash;
+        }
 
         vex.defaultOptions.className = 'modal-theme-' + self.settings.theme + ' modal-' + self.settings.id;
 
@@ -122,12 +154,12 @@ var bsp_modal = {
         // we do not want to do a clone here, as there can be clicks and other modules tied to this DOM
         self.vexInstance = vex.open({
 
-            content: self.$el.contents(),
+            content: $modalData,
 
             // before we close those, put the stuff back (except for the close button of course)
             beforeClose: function() {
                 self.vexInstance.find('.vex-close').remove();
-                self.$el.append(self.vexInstance.contents());
+                self.$el.find('.modal-data').html($savedContents);
             }
 
         });

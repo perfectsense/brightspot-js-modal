@@ -36,6 +36,10 @@ Lastly, the bsp-modal can just be imported into another JS plugin/module and use
 	myModal.open($('<div>asdf</div>'); 
 	myModal.close();
 
+## Auto Open: 
+
+Accounts for the use case of having a modal with a gallery sitting on a page and needed to be opend on page load. When there is a hash of `slide-X` in the URL, the modal code will detect that and automatically trigger itself.
+
 ## TODO:
 
 Need to add unit testing and live examples. Also maybe pull vex via Bower into here into a dist folder and use that instead of just src
