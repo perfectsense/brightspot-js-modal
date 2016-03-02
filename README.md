@@ -4,11 +4,15 @@ Our modal plugin is a wrapper for the Vex modal. If you use this plugin, you are
 
 ## Usage
 
-The bsp-modal code uses http://github.hubspot.com/vex/ as it's base much like brightspot-js-carousel uses slick. To create a modal, create a div with the class 'bsp-modal-data' with the data attribute of 'data-bsp-modal' to trigger the JS init. There is an optional id that can be set to override the default id for custom CSS. Default is 'modal'. Example:
+The bsp-modal code uses http://github.hubspot.com/vex/ as it's base much like brightspot-js-carousel uses slick. To create a modal, create a div data attribute of 'data-bsp-modal' to trigger the JS init. Inside this div, create a div with class "modal-data", which is where you modal contents will go. There is an optional id that can be set to override the default id for custom CSS. Default is 'modal'. Example:
 
-	<div class="bsp-modal-data" data-bsp-modal data-bsp-modal-options='{"id" : "id-here"}'>
+	<div class="modal-data-wrapper-or-whatever-you-want" data-bsp-modal data-bsp-modal-options='{"id" : "id-here"}'>
+		<div class="modal-data">
+			Modal Content Goes Here
+		</div>
+	</div>
 
-This div should have the contents of the modal. To open said modal via a click, create a link with data-bsp-modal-open="id-here". Upon click of the link the modal will open. It can be closed with it's own close button, Esc key, or an off click. Example:
+To open said modal via a click, create a link with data-bsp-modal-open="id-here". Upon click of the link the modal will open. It can be closed with it's own close button, Esc key, or an off click. Example:
 
 	<a data-bsp-modal-open="id-here" href="#">Open the modal with data-bsp-modal id of "id-here"</a>
 
