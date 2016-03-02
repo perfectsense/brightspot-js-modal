@@ -148,7 +148,7 @@ var bsp_modal = {
             window.location.hash = options.hash;
         }
 
-        vex.defaultOptions.className = 'modal-theme-' + self.settings.theme + ' modal-' + self.settings.id;
+        vex.defaultOptions.className = self.settings.theme + ' ' + self.settings.id;
 
         // when we do open the modal, grab the contents of the element and drop that into the modal
         // we do not want to do a clone here, as there can be clicks and other modules tied to this DOM
@@ -175,7 +175,7 @@ var bsp_modal = {
 
         var settings = $.extend({}, self.defaults, options);
 
-        vex.defaultOptions.className = 'modal-theme-' + settings.theme + ' modal-' + settings.id;
+        vex.defaultOptions.className = settings.theme + ' ' + settings.id;
 
         self.vexInstance = vex.open({
             content: $content
