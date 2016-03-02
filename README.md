@@ -6,7 +6,7 @@ Our modal plugin is a wrapper for the Vex modal. If you use this plugin, you are
 
 The bsp-modal code uses http://github.hubspot.com/vex/ as it's base much like brightspot-js-carousel uses slick. To create a modal, create a div data attribute of 'data-bsp-modal' to trigger the JS init. Inside this div, create a div with class "modal-data", which is where you modal contents will go. There is an optional id that can be set to override the default id for custom CSS. Default is 'modal'. Example:
 
-	<div class="modal-data-wrapper-or-whatever-you-want" data-bsp-modal data-bsp-modal-options='{"id" : "id-here"}'>
+	<div data-bsp-modal data-bsp-modal-options='{"id" : "id-here"}'>
 		<div class="modal-data">
 			Modal Content Goes Here
 		</div>
