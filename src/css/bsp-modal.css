@@ -1,9 +1,17 @@
-/* The below styles are the Vex piping to make the modal look good. They include the necessary scaffolding for 
-   Vex, as well as a default theme. 
-  
-   TODO: Possibly pull these in via Bower from Vex instead of just forking them here
+/**
+ * The below styles are the Vex piping to make the modal look good. They include the necessary scaffolding for Vex, as well as a default theme.
+ *
+ * We also hide the "modal-data" div for you, as that is where the modal data comes from.
+ *
+ * TODO: Possibly pull these in via Bower from Vex instead of just forking them here
  */
 
+.modal-data {
+  display: none;
+}
+
+
+// START Base Vex code to make modal look ok
 @keyframes vex-fadein {
   0% {
     opacity: 0; }
