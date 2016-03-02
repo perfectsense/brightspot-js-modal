@@ -215,6 +215,7 @@
   -ms-animation: vex-fadein 0.5s;
   -o-animation: vex-fadein 0.5s;
   -webkit-backface-visibility: hidden;
+  position: relative;
   background: #fff; }
 
   .vex.vex-closing .vex-content {
