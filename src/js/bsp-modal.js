@@ -8,7 +8,7 @@ var bsp_modal = {
         'id'    : 'modal',
         'theme' : 'default',
         'autoOpenHash' : 'slide-',
-        'withDataAndEvents' : false,
+        'withDataAndEvents' : true,
         'deepWithDataAndEvents' : null
     },
 
