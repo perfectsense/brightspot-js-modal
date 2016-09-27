@@ -46,14 +46,7 @@ var bsp_modal = {
         var self = this;
 
         $('[data-bsp-modal-open=' + self.settings.id + ']').on('click', function() {
-            // if we have a anchor link, let that through
-            if($(this).attr('href').indexOf('#') === 0) {
-                self._openFromDOM({
-                    'hash' : $(this).attr('href')
-                });
-            } else {
-                self._openFromDOM();
-            }
+            self._openFromDOM(this);
 
             return false;
         });
@@ -135,17 +128,22 @@ var bsp_modal = {
     // private function to open modal from the DOM. Calls the vex open method, but also sets up
     // the centering and passes though the events. Lastly, upon close, it puts everything back the
     // way it founded, leaving the DOM intact
-    _openFromDOM: function(options) {
+    _openFromDOM: function(opener) {
         var self = this;
-        // just in case no options are passed in
-        options = options || {};
         // grab the modal data within that element
         var $modalData = self.$el.find('.modal-data').contents();
         // save it off, we're going to need to put it back
         var $savedContents = $modalData.clone();
 
-        if(options.hash) {
-            window.location.hash = options.hash;
+        // if opened by a DOM element
+        if(opener) {
+            var $opener = $(opener);
+            var href = $opener.attr('href');
+            // if we have a anchor link, let that through
+            if(href && href.indexOf('#') === 0) {
+                window.location.hash = href;
+            }
+            self.$opener = $opener;
         }
 
         vex.defaultOptions.className = 'modal-theme-' + self.settings.theme + ' modal-' + self.settings.id;
