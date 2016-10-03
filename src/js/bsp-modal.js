@@ -95,34 +95,16 @@ var bsp_modal = {
         });
     },
 
-    // private function that centers the modal in the window screen
-    // alternatively if the modal is bigger than the window, we have to CSS hack
-    // the height of the overlay to cover the whole modal
+    // private function that initializes modal centering
     _centerModal: function() {
         var self = this;
 
-        function centering() {
-            var $vexInstance = $(self.vexInstance);
+        self.recenter();
 
-            var contentHeight = $vexInstance.outerHeight();
-            var windowHeight = $(window).height();
-
-            if(contentHeight > windowHeight) {
-                $(self.vexInstance).siblings('.vex-overlay').css('height', contentHeight);
-            } else {
-                $vexInstance.css('margin-top', (windowHeight - contentHeight)/2);
-                $(self.vexInstance).siblings('.vex-overlay').css('height', 'auto');
-            }
-        }
-
-        // run helper function
-        centering();
-
-        // set on a throttled resize to keep up to date if we flip a device or resize the screen
-        $(window).on('resize', bsp_utils.throttle(250,function() {
-            centering();
+        // apply a throttled resize to keep up to date if we flip a device or resize the screen
+        $(window).off('resize.bsp-modal').on('resize.bsp-modal', bsp_utils.throttle(250,function() {
+            self.recenter();
         }));
-
     },
 
     // private function to open modal from the DOM. Calls the vex open method, but also sets up
@@ -189,6 +171,24 @@ var bsp_modal = {
         var self = this;
 
         vex.close(self.vexInstance.data().vex.id);
+    },
+
+    // public API that recenters the modal in the window screen (useful after content changes)
+    // alternatively if the modal is bigger than the window, we have to CSS hack
+    // the height of the overlay to cover the whole modal
+    recenter: function() {
+        var self = this;
+
+        var contentHeight = self.vexInstance.outerHeight();
+        var windowHeight = $(window).height();
+
+        if(contentHeight > windowHeight) {
+            self.vexInstance.css('margin-top', '');
+            self.vexInstance.siblings('.vex-overlay').css('height', contentHeight);
+        } else {
+            self.vexInstance.css('margin-top', (windowHeight - contentHeight)/2);
+            self.vexInstance.siblings('.vex-overlay').css('height', 'auto');
+        }
     }
 
 };
