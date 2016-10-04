@@ -41,23 +41,22 @@ var bsp_modal = {
         }
     },
 
-    // run through the body and grap and links to open THIS modal and hit the public API when clicked
+    // document delegates link clicks to open THIS modal and hit the public API when clicked
     _handleOpenLinks: function() {
         var self = this;
 
-        $('[data-bsp-modal-open=' + self.settings.id + ']').on('click', function() {
+        $(document.body).on('click', '[data-bsp-modal-open=' + self.settings.id + ']', function() {
             self._openFromDOM(this);
 
             return false;
         });
     },
 
-    // run through the body and grab any links to close THIS modal and hit the public API when clicked
+    // document delegates link clicks to close THIS modal and hit the public API when clicked
     _handleCloseLinks: function() {
-
         var self = this;
 
-        $('[data-bsp-modal-close=' + self.settings.id + ']').on('click', function() {
+        $(document.body).on('click', '[data-bsp-modal-close=' + self.settings.id + ']', function() {
             self.close();
 
             return false;
