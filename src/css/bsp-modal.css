@@ -11,7 +11,7 @@
 }
 
 
-// START Base Vex code to make modal look ok
+/* START Base Vex code to make modal look ok */
 @keyframes vex-fadein {
   0% {
     opacity: 0; }
