@@ -7,7 +7,9 @@ var bsp_modal = {
     defaults: {
         'id'    : 'modal',
         'theme' : 'default',
-        'autoOpenHash' : 'slide-'
+        'autoOpenHash' : 'slide-',
+        'withDataAndEvents' : true,
+        'deepWithDataAndEvents' : null
     },
 
     init: function($el, options) {
@@ -114,7 +116,11 @@ var bsp_modal = {
         // grab the modal data within that element
         var $modalData = self.$el.find('.modal-data').contents();
         // save it off, we're going to need to put it back
-        var $savedContents = $modalData.clone();
+        // http://api.jquery.com/clone/ 
+        if (self.settings.deepWithDataAndEvents == null) {
+            self.settings.deepWithDataAndEvents = self.settings.withDataAndEvents;
+        }
+        var $savedContents = $modalData.clone(self.settings.withDataAndEvents, self.settings.deepWithDataAndEvents);
 
         // if opened by a DOM element
         if(opener) {
